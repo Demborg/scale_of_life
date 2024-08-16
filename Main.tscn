@@ -31,3 +31,5 @@ position = Vector2( 240, 360 )
 [node name="Control" parent="." instance=ExtResource( 4 )]
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="hit" from="Node2D/Player" to="." method="_on_Player_hit"]
+[connection signal="retry" from="Control" to="." method="_on_Control_retry"]

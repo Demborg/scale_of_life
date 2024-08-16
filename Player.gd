@@ -18,14 +18,6 @@ func _process(delta):
 		velocity = velocity.normalized() * speed
 		position += velocity * delta
 
-
-func _on_Player_body_entered(body):
-	if body.mass < mass:
-		set_mass(mass + body.mass)
-		body.die()
-	else:
-		print("death")
-
 func start(pos):
 	position = pos
 	set_mass(1)
@@ -44,4 +36,4 @@ func _on_Player_area_entered(area):
 		set_mass(mass + area.mass)
 		area.die()
 	else:
-		print("death")
+		emit_signal("hit")

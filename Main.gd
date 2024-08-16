@@ -18,7 +18,10 @@ func _process(delta):
 
 	
 func new_game():
+	$Node2D/Player.show()
 	$Node2D/Player.start($StartPosition.position)
+	$Node2D/Player.set_mass(1)
+	$Node2D.scale = Vector2(1, 1)
 	$SpawnTimer.start()
 
 func _on_SpawnTimer_timeout():
@@ -29,3 +32,11 @@ func _on_SpawnTimer_timeout():
 	o.position = location.position / $Node2D.scale
 	o.compute_scale($Node2D/Player.mass * 2 * randf())
 	$Node2D.add_child(o)
+
+
+func _on_Player_hit():
+	$Node2D/Player.hide()
+	$Control.die()
+
+func _on_Control_retry():
+	new_game()
