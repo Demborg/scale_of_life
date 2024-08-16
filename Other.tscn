@@ -14,15 +14,14 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 32 )
 
-[node name="Other" type="RigidBody2D"]
-gravity_scale = 0.0
+[node name="Other" type="Area2D"]
 script = ExtResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 scale = Vector2( 3, 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-rotation = 3.14159
+rotation = -3.14159
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

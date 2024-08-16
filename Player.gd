@@ -37,3 +37,11 @@ func set_mass(m):
 	$AnimatedSprite.scale = s
 	$CollisionShape2D.scale = s
 	
+
+
+func _on_Player_area_entered(area):
+	if area.mass < mass:
+		set_mass(mass + area.mass)
+		area.die()
+	else:
+		print("death")

@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 export(PackedScene) var other_scene
 
@@ -7,17 +7,17 @@ func _ready():
 	new_game()
 	
 func _process(delta):
-	if not $Player.mass:
+	if not $Node2D/Player.mass:
 		return
-	var target_scale = 1/sqrt($Player.mass)
-	var current_scale = scale.x
+	var target_scale = 1/sqrt($Node2D/Player.mass)
+	var current_scale = $Node2D.scale.x
 	
 	var s = lerp(current_scale, target_scale, delta) 
-	scale = Vector2(s, s)
-	$Path2D.scale = scale
+	$Node2D.scale = Vector2(s, s)
+
 	
 func new_game():
-	$Player.start($StartPosition.position)
+	$Node2D/Player.start($StartPosition.position)
 	$SpawnTimer.start()
 
 func _on_SpawnTimer_timeout():
@@ -25,6 +25,6 @@ func _on_SpawnTimer_timeout():
 	var location = get_node("Path2D/PathFollow2D")
 	location.offset = randi()
 	
-	o.position = location.position
-	o.compute_scale($Player.mass, 2 * randf())
-	add_child(o)
+	o.position = location.position / $Node2D.scale
+	o.compute_scale($Node2D/Player.mass * 2 * randf())
+	$Node2D.add_child(o)

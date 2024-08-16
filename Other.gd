@@ -1,9 +1,10 @@
-extends RigidBody2D
+extends Area2D
 
 export var speed = 100 # How fast the player will move (pixels/sec).
 export var momentum = 0.7
 
 var direction = Vector2.ZERO
+var mass = 1
 
 func randomVector():
 	var v = Vector2(2 * randf() - 1, 2 * randf() - 1)
@@ -22,9 +23,9 @@ func _process(delta):
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
-func compute_scale(player_mass, relative_mass):
-	mass = player_mass * relative_mass
-	var s = sqrt(relative_mass)
+func compute_scale(m):
+	mass = m
+	var s = sqrt(m)
 	s = Vector2(s, s)
 	$AnimatedSprite.scale = s
 	$CollisionShape2D.scale = s
