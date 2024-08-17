@@ -1,22 +1,28 @@
 extends Area2D
 signal hit
-export var speed = 400 # How fast the player will move (pixels/sec).
+export var normalized_speed = 400 # How fast the player will move (pixels/sec).
+var velocity = Vector2.ZERO
 
 var mass = 1
 
+func momentum():
+	return 1 - 1/mass
+	
+func max_speed():
+	return normalized_speed * sqrt(mass)
+
 func _process(delta):
-	var velocity = Vector2.ZERO # The player's movement vector.
+	var direction = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
+		direction.x += 1
 	if Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
+		direction.x -= 1
 	if Input.is_action_pressed("ui_down"):
-		velocity.y += 1
+		direction.y += 1
 	if Input.is_action_pressed("ui_up"):
-		velocity.y -= 1
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		position += velocity * delta
+		direction.y -= 1
+	velocity = lerp(direction * max_speed(), velocity, momentum())
+	position += velocity * delta
 
 func start(pos):
 	position = pos
@@ -29,8 +35,7 @@ func set_mass(m):
 	$AnimatedSprite.scale = s
 	$CollisionShape2D.scale = s
 	
-
-
+	
 func _on_Player_area_entered(area):
 	if area.mass < mass:
 		set_mass(mass + area.mass)
