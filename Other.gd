@@ -4,7 +4,9 @@ export var speed = 100 # How fast the player will move (pixels/sec).
 
 var direction = Vector2.ZERO
 var mass = 1
-var momentum = 0.7
+
+func momentum():
+	return lerp(1 - 1/mass, 1, 0.3)
 
 func randomVector():
 	var v = Vector2(2 * randf() - 1, 2 * randf() - 1)
@@ -17,7 +19,7 @@ func _ready():
 
 func _process(delta):
 	position += speed * direction * delta * sqrt(mass)
-	direction = (momentum * direction + (1 - momentum) * randomVector().normalized()).normalized()
+	direction =lerp(randomVector().normalized(), direction, momentum()).normalized()
 
 
 func _on_VisibilityNotifier2D_screen_exited():
