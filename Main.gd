@@ -15,6 +15,7 @@ func _process(delta):
 	var s = lerp(current_scale, target_scale, delta) 
 	$Node2D.scale = Vector2(s, s)
 	$Control.set_weight($Node2D/Player.mass)
+	$TextureRect.material.set_shader_param("scale", 1 / s)
 
 	
 func new_game():

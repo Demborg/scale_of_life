@@ -29,7 +29,7 @@ func compute_scale(m):
 	mass = m
 	var s = sqrt(m)
 	s = Vector2(s, s)
-	$AnimatedSprite.scale = s
+	$Node2D.scale = s
 	$CollisionShape2D.scale = s
 	$VisibilityNotifier2D.scale = s
 	
