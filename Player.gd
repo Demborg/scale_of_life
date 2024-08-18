@@ -43,4 +43,5 @@ func _on_Player_area_entered(area):
 		set_mass(mass + area.mass)
 		area.die()
 	else:
+		$DeathPlayer.play()
 		emit_signal("hit")
