@@ -38,6 +38,8 @@ func set_mass(m):
 	
 func _on_Player_area_entered(area):
 	if area.mass < mass:
+		$AudioStreamPlayer.pitch_scale = 2 * 1 / pow(mass, 0.1)
+		$AudioStreamPlayer.play()
 		set_mass(mass + area.mass)
 		area.die()
 	else:
