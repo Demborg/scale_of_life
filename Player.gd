@@ -8,8 +8,25 @@ var mass = 1
 func momentum():
 	return 1 - 1/mass
 	
+func scene_scale():
+	return sqrt(mass)
+	
 func max_speed():
-	return normalized_speed * sqrt(mass)
+	return normalized_speed * scene_scale()
+	
+func fix_pos():
+	if position.x < 0:
+		position.x = 0
+		velocity.x *= -1
+	if position.x > 480 * scene_scale():
+		position.x = 480 * scene_scale() 
+		velocity.x *= -1
+	if position.y < 0:
+		position.y = 0
+		velocity.y *= -1
+	if position.y > 720 * scene_scale():
+		position.y = 720 * scene_scale() 
+		velocity.y *= -1
 
 func _process(delta):
 	var direction = Vector2.ZERO
@@ -23,6 +40,7 @@ func _process(delta):
 		direction.y -= 1
 	velocity = lerp(direction * max_speed(), velocity, momentum())
 	position += velocity * delta
+	fix_pos()
 
 func start(pos):
 	position = pos
@@ -30,7 +48,7 @@ func start(pos):
 
 func set_mass(m):
 	mass = m
-	var s = sqrt(mass)
+	var s = scene_scale()
 	s = Vector2(s, s)
 	$Node2D.scale = s
 	$CollisionShape2D.scale = s
