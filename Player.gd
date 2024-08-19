@@ -6,7 +6,7 @@ var velocity = Vector2.ZERO
 var mass = 1
 
 func momentum():
-	return 1 - 1/mass
+	return 1 - 1/pow(mass, 0.5)
 	
 func scene_scale():
 	return sqrt(mass)

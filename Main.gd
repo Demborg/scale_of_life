@@ -33,6 +33,7 @@ func _on_SpawnTimer_timeout():
 	o.position = location.position / $Node2D.scale
 	o.compute_scale($Node2D/Player.mass * 2 * randf())
 	$Node2D.add_child(o)
+	$SpawnTimer.wait_time = 1 / pow($Node2D/Player.mass, 0.2)
 
 
 func _on_Player_hit():
