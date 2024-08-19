@@ -15,6 +15,7 @@ noise = SubResource( 5 )
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 5 )
 shader_param/scale = 1.0
+shader_param/noise_vel = Vector2( 0.1, 0.3 )
 shader_param/NOISE_PATTERN = SubResource( 4 )
 
 [sub_resource type="Curve2D" id=1]

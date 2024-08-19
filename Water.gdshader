@@ -4,6 +4,7 @@ uniform float scale = 1;
 
 uniform sampler2D NOISE_PATTERN;
 
+uniform vec2 noise_vel = vec2(0.1, 0.3);
 
 vec2 random(vec2 uv) {
 	return vec2(fract(sin(dot(uv.xy,
@@ -33,8 +34,8 @@ float worley(vec2 uv, float columns, float rows) {
 
 void fragment() {
 	vec2 uv_scaled = scale * UV;
-	vec2 offset = texture(NOISE_PATTERN, uv_scaled + TIME * vec2(0.03, 0.01)).xy;
-	float worley = worley(uv_scaled + offset, 1.0, 2.0);
+	vec2 offset = texture(NOISE_PATTERN, uv_scaled + TIME * noise_vel).xy * 0.2;
+	float worley = worley(uv_scaled - TIME * noise_vel + offset, 1.0, 2.0);
 	COLOR = vec4(1, 1, 1, worley);
 }
 

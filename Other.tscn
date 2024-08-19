@@ -32,6 +32,7 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Node2D"]
 scale = Vector2( 0.28302, 0.376345 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
