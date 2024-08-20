@@ -7,6 +7,14 @@ var mass = 1
 
 func momentum():
 	return lerp(1 - 1/mass, 1, 0.3)
+	
+func set_danger(player_mass: float):
+	if mass > player_mass:
+		$Node2D/danger.show()
+		$Node2D/safe.hide()
+	else:
+		$Node2D/safe.show()
+		$Node2D/danger.hide()
 
 func randomVector():
 	var v = Vector2(2 * randf() - 1, 2 * randf() - 1)

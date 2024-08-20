@@ -43,6 +43,8 @@ curve = SubResource( 1 )
 
 [node name="Player" parent="Node2D" instance=ExtResource( 1 )]
 
+[node name="Others" type="Node2D" parent="Node2D"]
+
 [node name="StartPosition" type="Position2D" parent="."]
 position = Vector2( 240, 360 )
 

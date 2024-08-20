@@ -14,7 +14,11 @@ func _process(delta):
 	
 	var s = lerp(current_scale, target_scale, delta) 
 	$Node2D.scale = Vector2(s, s)
-	$Control.set_weight($Node2D/Player.mass)
+	var player_mass =$Node2D/Player.mass
+	$Control.set_weight(player_mass)
+	for c in $Node2D/Others.get_children():
+		c.set_danger(player_mass)
+		
 	$TextureRect.material.set_shader_param("scale", 1 / s)
 
 	
@@ -32,7 +36,7 @@ func _on_SpawnTimer_timeout():
 	
 	o.position = location.position / $Node2D.scale
 	o.compute_scale($Node2D/Player.mass * 2 * randf())
-	$Node2D.add_child(o)
+	$Node2D/Others.add_child(o)
 	$SpawnTimer.wait_time = 1 / pow($Node2D/Player.mass, 0.2)
 
 
