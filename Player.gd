@@ -13,20 +13,6 @@ func scene_scale():
 	
 func max_speed():
 	return normalized_speed * scene_scale()
-	
-func fix_pos():
-	if position.x < 0:
-		position.x = 0
-		velocity.x *= -1
-	if position.x > 480 * scene_scale():
-		position.x = 480 * scene_scale() 
-		velocity.x *= -1
-	if position.y < 0:
-		position.y = 0
-		velocity.y *= -1
-	if position.y > 720 * scene_scale():
-		position.y = 720 * scene_scale() 
-		velocity.y *= -1
 
 func _process(delta):
 	var direction = Vector2.ZERO
@@ -40,7 +26,11 @@ func _process(delta):
 		direction.y -= 1
 	velocity = lerp(direction * max_speed(), velocity, momentum())
 	position += velocity * delta
-	fix_pos()
+	
+	var target_zoom = scene_scale()
+	var current_zoom = $Camera2D.zoom.x
+	var zoom = lerp(current_zoom, target_zoom, delta)
+	$Camera2D.zoom = Vector2(zoom, zoom)
 
 func start(pos):
 	position = pos
@@ -49,10 +39,16 @@ func start(pos):
 func set_mass(m):
 	mass = m
 	var s = scene_scale()
-	s = Vector2(s, s)
-	$Node2D.scale = s
-	$CollisionShape2D.scale = s
 	
+	var s_vec = Vector2(s, s)
+	$Node2D.scale = s_vec
+	$CollisionShape2D.scale = s_vec
+
+func camera_s():
+	return $Camera2D.zoom.x
+	
+func camera_pos():
+	return $Camera2D.global_position / Vector2(480, 720)
 	
 func _on_Player_area_entered(area):
 	if area.mass < mass:

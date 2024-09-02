@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
-uniform float scale = 1; 
+uniform float scale = 1;
+uniform vec2 pos = vec2(0, 0);
 
 uniform sampler2D NOISE_PATTERN;
 
@@ -33,7 +34,7 @@ float worley(vec2 uv, float columns, float rows) {
 }
 
 void fragment() {
-	vec2 uv_scaled = scale * UV;
+	vec2 uv_scaled = scale * (UV -vec2(0.5, 0.5)) + pos;
 	vec2 offset = texture(NOISE_PATTERN, uv_scaled + TIME * noise_vel).xy * 0.2;
 	float worley = worley(uv_scaled - TIME * noise_vel + offset, 1.0, 2.0);
 	COLOR = vec4(1, 1, 1, worley);

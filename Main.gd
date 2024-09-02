@@ -9,24 +9,21 @@ func _ready():
 func _process(delta):
 	if not $Node2D/Player.mass:
 		return
-	var target_scale = 1/sqrt($Node2D/Player.mass)
-	var current_scale = $Node2D.scale.x
 	
-	var s = lerp(current_scale, target_scale, delta) 
-	$Node2D.scale = Vector2(s, s)
 	var player_mass =$Node2D/Player.mass
 	$Control.set_weight(player_mass)
 	for c in $Node2D/Others.get_children():
 		c.set_danger(player_mass)
-		
-	$TextureRect.material.set_shader_param("scale", 1 / s)
-
+	
+	var s = $Node2D/Player.camera_s()
+	var pos = $Node2D/Player.camera_pos()
+	$BG/TextureRect.material.set_shader_param("scale", s)
+	$BG/TextureRect.material.set_shader_param("pos", pos)
+	
 	
 func new_game():
 	$Node2D/Player.show()
-	$Node2D/Player.start($StartPosition.position)
 	$Node2D/Player.set_mass(1)
-	$Node2D.scale = Vector2(1, 1)
 	$SpawnTimer.start()
 
 func _on_SpawnTimer_timeout():
@@ -34,7 +31,7 @@ func _on_SpawnTimer_timeout():
 	var location = get_node("Path2D/PathFollow2D")
 	location.offset = randi()
 	
-	o.position = location.position / $Node2D.scale
+	o.position = (location.position - Vector2(240, 360)) * sqrt($Node2D/Player.mass) + $Node2D/Player.position
 	o.compute_scale($Node2D/Player.mass * 2 * randf())
 	$Node2D/Others.add_child(o)
 	$SpawnTimer.wait_time = 1 / pow($Node2D/Player.mass, 0.2)
@@ -43,6 +40,7 @@ func _on_SpawnTimer_timeout():
 func _on_Player_hit():
 	$Node2D/Player.hide()
 	$Control.die()
+	
 
 func _on_Control_retry():
 	new_game()

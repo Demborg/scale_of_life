@@ -29,26 +29,23 @@ animations = [ {
 script = ExtResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-scale = Vector2( 3, 3 )
+rect = Rect2( -100, -100, 200, 200 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="safe" type="AnimatedSprite" parent="Node2D"]
-visible = false
 scale = Vector2( 0.283, 0.376 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="danger" type="AnimatedSprite" parent="Node2D"]
-visible = false
 scale = Vector2( 0.28302, 0.376345 )
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
